@@ -16,9 +16,10 @@ namespace OptimizationMethods {
         private readonly double _maxL = 15;
         private readonly double _minS = 1;
         private readonly double _maxS = 12;
-        private readonly double _learningRate = 0.5;
+        private readonly double _learningRate = 0.4;
+        private readonly double _moment = 0.2;
         private readonly double _startL = 4;
-        private readonly double _startS = 0;
+        private readonly double _startS = 2;
 
 
         public double Function(Pair pair) {
@@ -45,12 +46,27 @@ namespace OptimizationMethods {
             return gradient;
         }
 
+        
         public List<Pair> GradientDecent() {
             List<Pair> listOfPairs = new();
             Pair currentPair = new(_startL, _startS);
-            for (int i = 0; i < 10; i++) {
-                listOfPairs.Add(currentPair);
+            listOfPairs.Add(currentPair);
+            Pair last;
+            for (int i = 0; i < 15; i++) {
+                if (i == 0) {
+                    last = listOfPairs[listOfPairs.Count - 1];
+                } else {
+                    last = listOfPairs[listOfPairs.Count - 2];
+                }
+
                 currentPair -= _learningRate * Gradient(currentPair);
+                // currentPair = currentPair - _learningRate * Gradient(currentPair) + _moment * (currentPair - last);
+                // поменять на while и проверить сумму
+                if (!(_minL <= currentPair.X && currentPair.X <= _maxL) &&
+                    (_minS <= currentPair.Y && currentPair.Y <= _maxS)) {
+                    currentPair = currentPair.Middle(last);
+                }
+                listOfPairs.Add(currentPair);
             }
 
             return listOfPairs;

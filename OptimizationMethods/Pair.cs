@@ -22,6 +22,9 @@ public class Pair {
     public static Pair operator *(double c, Pair pair)
         => new Pair(c * pair._x, c * pair._y);
     
+    public static Pair operator /(Pair pair, double c)
+        => new Pair(pair._x / c, pair._y / c);
+    
     public static Pair operator +(Pair a) => a;
     
     public static Pair operator +(Pair a, Pair b) => new Pair(a._x + b._x, a._y + b._y);
@@ -34,7 +37,7 @@ public class Pair {
         return _x + " " + _y;
     }
 
-    public void MultiplicationPair() {
-        
+    public Pair Middle(Pair pair) {
+        return  (this + pair) / 2;
     }
 }
