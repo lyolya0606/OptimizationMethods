@@ -62,28 +62,8 @@ namespace OptimizationMethods {
             listOfPairs.Add(currentPair);
             Pair last;
 
-            // while (true) {
-            //     last = listOfPairs[listOfPairs.Count - 1];
-            //     currentPair -= _learningRate * Gradient(currentPair);
-            //     //currentPair = currentPair - _learningRate * Gradient(currentPair) + _momentum * (currentPair - last);
-            //     // поменять на while 
-            //     while (!IsPointGood(currentPair.X, currentPair.Y)) {
-            //         currentPair = currentPair.Middle(last);
-            //     }
-            //     listOfPairs.Add(currentPair);
-            //     if (Math.Abs(Function(currentPair) - Function(last)) < 0.01) {
-            //         break;
-            //     }
-            // }
-            
-            
-            for (int i = 0; i < 14; i++) {
-                if (i == 0) {
-                    last = listOfPairs[listOfPairs.Count - 1];
-                } else {
-                    last = listOfPairs[listOfPairs.Count - 2];
-                }
-            
+            while (true) {
+                last = listOfPairs[listOfPairs.Count - 1];
                 currentPair -= _learningRate * Gradient(currentPair);
                 //currentPair = currentPair - _learningRate * Gradient(currentPair) + _momentum * (currentPair - last);
                 // поменять на while 
@@ -91,7 +71,50 @@ namespace OptimizationMethods {
                     currentPair = currentPair.Middle(last);
                 }
                 listOfPairs.Add(currentPair);
+                if (Math.Abs(Function(currentPair) - Function(last)) < 0.01) {
+                    break;
+                }
             }
+            return listOfPairs;
+        }
+        
+        // градиентный спуск тяжелого шарика Поляка
+        public List<Pair> GradientDescentHeavyBall() {
+            List<Pair> listOfPairs = new();
+            Pair currentPair = new(_startL, _startS);
+            listOfPairs.Add(currentPair);
+            Pair last;
+            Pair lastForMethod = listOfPairs[listOfPairs.Count - 1];
+
+            while (true) {
+                last = listOfPairs[listOfPairs.Count - 1];
+               // currentPair -= _learningRate * Gradient(currentPair);
+                currentPair = currentPair - _learningRate * Gradient(currentPair) + _momentum * (currentPair - lastForMethod);
+                // поменять на while 
+                while (!IsPointGood(currentPair.X, currentPair.Y)) {
+                    currentPair = currentPair.Middle(last);
+                }
+                listOfPairs.Add(currentPair);
+                lastForMethod = listOfPairs[listOfPairs.Count - 2];
+                if (Math.Abs(Function(currentPair) - Function(last)) < 0.01) {
+                    break;
+                }
+            }
+            // for (int i = 0; i < 14; i++) {
+            //     if (i == 0) {
+            //         last = listOfPairs[listOfPairs.Count - 1];
+            //     } else {
+            //         last = listOfPairs[listOfPairs.Count - 2];
+            //     }
+            //
+            //     currentPair -= _learningRate * Gradient(currentPair);
+            //     //currentPair = currentPair - _learningRate * Gradient(currentPair) + _momentum * (currentPair - last);
+            //     // поменять на while 
+            //     while (!IsPointGood(currentPair.X, currentPair.Y)) {
+            //         currentPair = currentPair.Middle(last);
+            //     }
+            //     listOfPairs.Add(currentPair);
+            // }
 
             return listOfPairs;
         }

@@ -64,15 +64,26 @@ namespace OptimizationMethods {
                 }
             }
             
-            List<Pair> points = _calculation.GradientDescent();
-            double[] lineX = new double[points.Count];
-            double[] lineY = new double[points.Count];
+            List<Pair> pointsGradient = _calculation.GradientDescent();
+            double[] lineXGradient = new double[pointsGradient.Count];
+            double[] lineYGradient = new double[pointsGradient.Count];
 
-            for (int i = 0; i < points.Count; i++) {
-                lineX[i] = points[i].X;
-                lineY[i] = points[i].Y;
+            for (int i = 0; i < pointsGradient.Count; i++) {
+                lineXGradient[i] = pointsGradient[i].X;
+                lineYGradient[i] = pointsGradient[i].Y;
             }
-            XYChart c = new XYChart(600, 600);
+            
+            List<Pair> pointsHeavyBall = _calculation.GradientDescentHeavyBall();
+            double[] lineXHeavyBall = new double[pointsHeavyBall.Count];
+            double[] lineYHeavyBall = new double[pointsHeavyBall.Count];
+
+            for (int i = 0; i < pointsHeavyBall.Count; i++) {
+                lineXHeavyBall[i] = pointsHeavyBall[i].X;
+                lineYHeavyBall[i] = pointsHeavyBall[i].Y;
+            }
+            
+            
+            XYChart c = new XYChart(650, 650);
             //c.addTitle("z = x * sin(y) + y * sin(x)      ", "Arial Bold Italic", 15);
             c.setPlotArea(75, 20, 500, 550, -1, -1, -1, c.dashLineColor(unchecked((int)0x80000000),
                 Chart.DotLine), -1);
@@ -84,16 +95,21 @@ namespace OptimizationMethods {
             c.yAxis().setTickDensity(30);
             c.xAxis().setTickDensity(30);
             
-            var l = c.addLineLayer(lineY, 0x000000);
-            l.setXData(lineX);
-            l.setLineWidth(3);
+            var lGradient = c.addLineLayer(lineYGradient, c.dashLineColor(0x808080, Chart.DashLine));
+            lGradient.setXData(lineXGradient);
+            lGradient.setLineWidth(2);
+            
+            var lHeavyBall = c.addLineLayer(lineYHeavyBall, 0x000000);
+            lHeavyBall.setXData(lineXHeavyBall);
+            lHeavyBall.setLineWidth(3);
 
             ContourLayer layer = c.addContourLayer(dataX, dataY, dataZ);
 
             c.getPlotArea().moveGridBefore(layer);
-            c.getPlotArea().moveGridBefore(l);
+            c.getPlotArea().moveGridBefore(lGradient);
+            c.getPlotArea().moveGridBefore(lHeavyBall);
 
-            ColorAxis cAxis = layer.setColorAxis(500, 60, Chart.TopLeft, 505, Chart.Right);
+            ColorAxis cAxis = layer.setColorAxis(570, 60, Chart.TopLeft, 505, Chart.Right);
             
             cAxis.setTitle("Color Legend", "Arial Bold Italic", 12);
             cAxis.setLabelStyle("Arial Bold");

@@ -9,7 +9,7 @@
         Title="MainWindow" Height="750" Width="1500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <TextBox Name="TestTextBox" HorizontalAlignment="Left" Margin="76,59,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="244" Height="93"/>
-        <ChartDirector:WPFChartViewer x:Name="WPFChart2D" Width="600" Height="600" Margin="152,76,748,58" />
+        <ChartDirector:WPFChartViewer x:Name="WPFChart2D" Width="650" Height="650" Margin="152,76,748,58" />
         <ChartDirector:WPFChartViewer x:Name="WPFChart3D" Width="600" Height="600" MouseMoveChart="WPFChart3D_MouseMoveChart" 
                                       MouseUp="WPFChart3D_MouseUpChart" ViewPortChanged="WPFChart3D_ViewPortChanged"  Margin="787,77,113,57" />
         <Label Content="лишь бы перекрыть" HorizontalAlignment="Left" Margin="150,663,0,0" VerticalAlignment="Top" Width="654" Background="White" Foreground="#FFFDFDFD"/>
