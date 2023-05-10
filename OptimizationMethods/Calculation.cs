@@ -17,53 +17,77 @@ namespace OptimizationMethods {
         private readonly double _minS = 1;
         private readonly double _maxS = 12;
         private readonly double _learningRate = 0.4;
-        private readonly double _moment = 0.2;
-        private readonly double _startL = 4;
-        private readonly double _startS = 2;
+        private readonly double _momentum = 0.2;
+        private readonly double _startL = 9;
+        private readonly double _startS = 11;
 
 
+        private bool IsPointGood(double x, double y) {
+            return ((y + x) >= _minSumLAndS);
+        }
         public double Function(Pair pair) {
             double L = pair.X;
             double S = pair.Y;
-            return _alpha * Math.Pow((L - S), 2) + _beta / _H * Math.Pow((S + L - _gamma * _N), 2);
+            if (IsPointGood(L, S)) {
+                return _alpha * Math.Pow((L - S), 2) + _beta / _H * Math.Pow((S + L - _gamma * _N), 2);
+            }
+
+            return double.NaN;
         }
         
-        public double PartialDerivativeL(Pair pair) {
+        // частная производная по L
+        private double PartialDerivativeL(Pair pair) {
             double L = pair.X;
             double S = pair.Y;
             return 2 * _alpha * (L - S) + 2 * _beta / _H * (S + L - _gamma * _N);
         }
 
-        // производная
-        public double PartialDerivativeS(Pair pair) {
+        // частная производная по S
+        private double PartialDerivativeS(Pair pair) {
             double L = pair.X;
             double S = pair.Y;
             return -2 * _alpha * (L - S) + 2 * _beta / _H * (S + L - _gamma * _N);
         }
 
-        public Pair Gradient(Pair pair) {
+        // градиент
+        private Pair Gradient(Pair pair) {
             var gradient = new Pair(PartialDerivativeL(pair), PartialDerivativeS(pair));
             return gradient;
         }
 
-        
-        public List<Pair> GradientDecent() {
+        // градиентный спуск
+        public List<Pair> GradientDescent() {
             List<Pair> listOfPairs = new();
             Pair currentPair = new(_startL, _startS);
             listOfPairs.Add(currentPair);
             Pair last;
-            for (int i = 0; i < 15; i++) {
+
+            // while (true) {
+            //     last = listOfPairs[listOfPairs.Count - 1];
+            //     currentPair -= _learningRate * Gradient(currentPair);
+            //     //currentPair = currentPair - _learningRate * Gradient(currentPair) + _momentum * (currentPair - last);
+            //     // поменять на while 
+            //     while (!IsPointGood(currentPair.X, currentPair.Y)) {
+            //         currentPair = currentPair.Middle(last);
+            //     }
+            //     listOfPairs.Add(currentPair);
+            //     if (Math.Abs(Function(currentPair) - Function(last)) < 0.01) {
+            //         break;
+            //     }
+            // }
+            
+            
+            for (int i = 0; i < 14; i++) {
                 if (i == 0) {
                     last = listOfPairs[listOfPairs.Count - 1];
                 } else {
                     last = listOfPairs[listOfPairs.Count - 2];
                 }
-
+            
                 currentPair -= _learningRate * Gradient(currentPair);
-                // currentPair = currentPair - _learningRate * Gradient(currentPair) + _moment * (currentPair - last);
-                // поменять на while и проверить сумму
-                if (!(_minL <= currentPair.X && currentPair.X <= _maxL) &&
-                    (_minS <= currentPair.Y && currentPair.Y <= _maxS)) {
+                //currentPair = currentPair - _learningRate * Gradient(currentPair) + _momentum * (currentPair - last);
+                // поменять на while 
+                while (!IsPointGood(currentPair.X, currentPair.Y)) {
                     currentPair = currentPair.Middle(last);
                 }
                 listOfPairs.Add(currentPair);
@@ -71,11 +95,13 @@ namespace OptimizationMethods {
 
             return listOfPairs;
         }
+        
+        
 
         public List<double> GetL() {
             List<double> listOfL = new();
             double current = _minL;
-            double step = 0.25;
+            double step = 0.05;
             while (current <= _maxL) {
                 listOfL.Add(current);
                 current += step;
@@ -87,7 +113,7 @@ namespace OptimizationMethods {
         public List<double> GetS() {
             List<double> listOfS = new();
             double current = _minS;
-            double step = 0.25;
+            double step = 0.05;
             while (current <= _maxS) {
                 listOfS.Add(current);
                 current += step;
