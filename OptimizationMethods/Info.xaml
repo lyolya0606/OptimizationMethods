@@ -1,0 +1,18 @@
+﻿<Window x:Class="OptimizationMethods.Info"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OptimizationMethods"
+        mc:Ignorable="d"
+        Title="Информация" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Label HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="113" Width="759">
+            <TextBlock TextWrapping="Wrap" FontSize="18" TextAlignment="Justify" Width="749" Height="132" FontFamily="Times New Roman" ><Run Text="Необходимо найти  габаритные размеры теплообменного устройства химического реактора (длину L (м) и ширину S (м)) , обеспечивающие минимальные затраты на изготовление   изделия.  Затраты на изготовление изделия связана с его весом."/><Run Text=" "/><Run Text="Зависимость веса изделия P от геометрических размеров  и заданных характеристик теплообменника  определяется  по формуле: "/></TextBlock>
+        </Label>
+        <Image Margin="10,123,416,207" Source="/Image2.png" Stretch="Fill"/>
+        <TextBlock TextWrapping="Wrap" FontSize="18" TextAlignment="Justify" FontFamily="Times New Roman" Margin="15,238,36,77" ><Run Text="На габариты теплообменника накладываются следующие ограничения. Длина L  должна быть не менее 1 м и не более 15 м, ширина S – не менее 1м и не более 12 м. Кроме того, обязательно должно выполняться условие : сумма  ( L+S ) должна быть не менее 12 м.  Стоимость изготовления 1 к"/><Run Language="ru-ru" Text="г"/><Run Text="  изделия составляет 100 у.е. Точность решения – 0,01 м."/><LineBreak/><Run/></TextBlock>
+        <Label Content="Бездудная Ольга, 404. Вариант 3" HorizontalAlignment="Left" Margin="537,375,0,0" VerticalAlignment="Top" FontFamily="Times New Roman" FontSize="16"/>
+
+    </Grid>
+</Window>

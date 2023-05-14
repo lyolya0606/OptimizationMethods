@@ -223,5 +223,10 @@ namespace OptimizationMethods {
              m_isDragging = false;
              WPFChart3D.updateViewPort(true, false);
          }
+
+        private void Info_Click(object sender, RoutedEventArgs e) {
+            Info info = new();
+            info.ShowDialog();
+        }
     }
 }
