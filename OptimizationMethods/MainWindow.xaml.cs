@@ -20,25 +20,24 @@ namespace OptimizationMethods {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
+        private Calculation _calculation;
+
         public MainWindow() {
             InitializeComponent();
 
-            Calculation calculation = new(0.1, 0.1);
-            // TestTextBox.Text = calculation.Gradient(5, 6)[0].ToString() + " " + calculation.Gradient(5, 6)[1].ToString();
-
-            List<Pair> x = calculation.GradientDescent();
-            // var joinedNames = x.Aggregate((a, b) => a.ToString() + b.ToString());
-            Pair pair = new(x[x.Count - 1].X, x[x.Count - 1].Y);
-            TestTextBox.Text = x[x.Count - 1].X.ToString() + " " + x[x.Count - 1].Y.ToString() + "\n" + calculation.Function(pair).ToString();
-            string s = "";
-            for (int i = 0; i < x.Count; i++) {
-                s += x[i].ToString() + "\n";
-            }
-            //TestTextBox.Text = calculation.Result().ToString();
-
+            _calculation = new(double.Parse(learningRateTextBox.Text), double.Parse(momentumTextBox.Text));
+            FillResult();
             CreateChart2D(WPFChart2D);
             CreateChart3D(WPFChart3D);
 
+        }
+
+        private void FillResult() {
+            List<Pair> listOfPairs = _calculation.GradientDescentHeavyBall();
+            Pair lastPair = new(listOfPairs[listOfPairs.Count - 1].X, listOfPairs[listOfPairs.Count - 1].Y);
+            LResult.Content = Math.Round(lastPair.X, 4);
+            SResult.Content = Math.Round(lastPair.Y, 4);
+            PResult.Content = Math.Round(_calculation.Function(lastPair) * 100, 4);
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e) {
@@ -47,10 +46,27 @@ namespace OptimizationMethods {
         }
 
         private bool CheckTextBox() {
-            return int.Parse(learningRateTextBox.Text) >= 0 && int.Parse(learningRateTextBox.Text) <= 1 &&
-                   int.Parse(momentumTextBox.Text) <= 1 && int.Parse(momentumTextBox.Text) >= 0;
+            return double.Parse(learningRateTextBox.Text) >= 0 && double.Parse(learningRateTextBox.Text) <= 1 &&
+                   double.Parse(momentumTextBox.Text) <= 1 && double.Parse(momentumTextBox.Text) >= 0;
         }
-        private Calculation _calculation = new(0.1, 0.1);
+        
+        private bool CheckTextBoxEmpty() {
+            return learningRateTextBox.Text != "" && momentumTextBox.Text != "";
+        }
+        
+
+        private void CalcButton_MouseDown(object sender, MouseButtonEventArgs e) {
+            if (!CheckTextBox()) {
+                MessageBox.Show("Коэффициенты должны быть в диапазоне от 0 до 1!");
+            } else if (!CheckTextBoxEmpty()) {
+                MessageBox.Show("Введите данные");
+            } else {
+                _calculation = new(double.Parse(learningRateTextBox.Text), double.Parse(momentumTextBox.Text));
+                FillResult();
+                CreateChart2D(WPFChart2D);
+                CreateChart3D(WPFChart3D);
+            }
+        }
 
 
         //Name of demo module
@@ -60,7 +76,7 @@ namespace OptimizationMethods {
         // public int getNoOfCharts() { return 1; }
 
 
-        public void CreateChart2D(WPFChartViewer viewer) {
+        private void CreateChart2D(WPFChartViewer viewer) {
             double[] dataX = _calculation.GetL().ToArray();
             double[] dataY = _calculation.GetS().ToArray();
             double[] dataZ = new double[dataX.Length * dataY.Length];
@@ -92,6 +108,11 @@ namespace OptimizationMethods {
                 lineYHeavyBall[i] = pointsHeavyBall[i].Y;
             }
             
+            List<Pair> grad = _calculation.GradientDescent();
+            // var joinedNames = x.Aggregate((a, b) => a.ToString() + b.ToString());
+            Pair lastPair = new(grad[grad.Count - 1].X, grad[grad.Count - 1].Y);
+            double[] lastX = new[] { grad[grad.Count - 1].X };
+            double[] lastY = new[] { grad[grad.Count - 1].Y };
             
             XYChart c = new XYChart(650, 650);
             //c.addTitle("z = x * sin(y) + y * sin(x)      ", "Arial Bold Italic", 15);
@@ -101,25 +122,33 @@ namespace OptimizationMethods {
             // c.yAxis().setTitle("Y-Axis Title Place Holder", "Arial Bold Italic", 12);
             c.xAxis().setLabelStyle("Arial Bold");
             c.yAxis().setLabelStyle("Arial Bold");
-            
+       
             c.yAxis().setTickDensity(30);
             c.xAxis().setTickDensity(30);
             
+            var dot = c.addLineLayer(lastY, 0xff0000);
+            dot.setXData(lastX);
+
+            dot.setLineWidth(5);
+            
             var lGradient = c.addLineLayer(lineYGradient, c.dashLineColor(0x808080, Chart.DashLine));
             lGradient.setXData(lineXGradient);
-            lGradient.setLineWidth(2);
+            lGradient.setLineWidth(4);
             
             var lHeavyBall = c.addLineLayer(lineYHeavyBall, 0x000000);
             lHeavyBall.setXData(lineXHeavyBall);
-            lHeavyBall.setLineWidth(3);
+            lHeavyBall.setLineWidth(5);
+            
+
 
             ContourLayer layer = c.addContourLayer(dataX, dataY, dataZ);
 
             c.getPlotArea().moveGridBefore(layer);
             c.getPlotArea().moveGridBefore(lGradient);
             c.getPlotArea().moveGridBefore(lHeavyBall);
+            c.getPlotArea().moveGridBefore(dot);
 
-            ColorAxis cAxis = layer.setColorAxis(570, 60, Chart.TopLeft, 505, Chart.Right);
+            ColorAxis cAxis = layer.setColorAxis(580, 60, Chart.TopLeft, 505, Chart.Right);
             
             cAxis.setTitle("Color Legend", "Arial Bold Italic", 12);
             cAxis.setLabelStyle("Arial Bold");
@@ -129,8 +158,7 @@ namespace OptimizationMethods {
         }
         
         
-         public void CreateChart3D(WPFChartViewer viewer)
-        {
+         private void CreateChart3D(WPFChartViewer viewer) {
             double[] dataX = _calculation.GetL().ToArray();
             double[] dataY = _calculation.GetS().ToArray();
             double[] dataZ = new double[dataX.Length * dataY.Length];
@@ -145,12 +173,25 @@ namespace OptimizationMethods {
                 }
             }
 
+            List<Pair> grad = _calculation.GradientDescent();
+            // var joinedNames = x.Aggregate((a, b) => a.ToString() + b.ToString());
+            Pair lastPair = new(grad[grad.Count - 1].X, grad[grad.Count - 1].Y);
+            double[] lastX = new[] { grad[grad.Count - 1].X };
+            double[] lastY = new[] { grad[grad.Count - 1].Y };
+            double[] lastZ = new[] { dataZ[dataZ.Length - 1] };
+            
+            
             // Create a SurfaceChart object of size 720 x 600 pixels
             SurfaceChart c = new SurfaceChart(600, 600);
+
+            //c.setData(lastX, lastY, lastZ);
+            //c.addSurfaceLine(lastX, lastY, 0x000000);
+            //c.setSize(600, 600);
 
             // Set the center of the plot region at (330, 290), and set width x depth x height to
             // 360 x 360 x 270 pixels
             c.setPlotRegion(330, 290, 380, 380, 300);
+            
 
             // Set the data to use to plot the chart
             c.setData(dataX, dataY, dataZ);
@@ -178,7 +219,6 @@ namespace OptimizationMethods {
             c.yAxis().setLabelStyle("Arial Bold", 10);
             c.zAxis().setLabelStyle("Arial Bold", 10);
             c.colorAxis().setLabelStyle("Arial Bold", 10);
-            
 
             // Output the chart
             viewer.Chart = c;
@@ -199,17 +239,14 @@ namespace OptimizationMethods {
          
          
          
-         private void WPFChart3D_MouseMoveChart(object sender, MouseEventArgs e)
-         {
+         private void WPFChart3D_MouseMoveChart(object sender, MouseEventArgs e) {
              WPFChart3D.updateViewPort(true, false);
              int mouseX = WPFChart3D.ChartMouseX;
              int mouseY = WPFChart3D.ChartMouseY;
 
              // Drag occurs if mouse button is down and the mouse is captured by the m_ChartViewer
-             if (Mouse.LeftButton == MouseButtonState.Pressed)
-             {
-                 if (m_isDragging)
-                 {
+             if (Mouse.LeftButton == MouseButtonState.Pressed) {
+                 if (m_isDragging) {
                      m_rotationAngle += (m_lastMouseX - mouseX) * 90.0 / 360;
                      m_elevationAngle += (mouseY - m_lastMouseY) * 90.0 / 270;
                      WPFChart3D.updateViewPort(true, false);
@@ -219,17 +256,13 @@ namespace OptimizationMethods {
                  m_lastMouseY = mouseY;
                  m_isDragging = true;
              }
-             
-             
          }
          
-         private void WPFChart3D_ViewPortChanged(object sender, WPFViewPortEventArgs e)
-         {
+         private void WPFChart3D_ViewPortChanged(object sender, WPFViewPortEventArgs e) {
              if (e.NeedUpdateChart)
                  CreateChart3D((WPFChartViewer)sender);
          }
-         private void WPFChart3D_MouseUpChart(object sender, MouseEventArgs e)
-         {
+         private void WPFChart3D_MouseUpChart(object sender, MouseEventArgs e) {
              m_isDragging = false;
              WPFChart3D.updateViewPort(true, false);
          }
@@ -238,5 +271,7 @@ namespace OptimizationMethods {
             Info info = new();
             info.ShowDialog();
         }
+
+
     }
 }

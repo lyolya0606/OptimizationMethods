@@ -16,9 +16,9 @@ namespace OptimizationMethods {
         private readonly double _maxL = 15;
         private readonly double _minS = 1;
         private readonly double _maxS = 12;
-        private readonly double _learningRate = 0.4;
-        private readonly double _momentum = 0.2;
-        private readonly double _startL = 9;
+        private readonly double _learningRate;
+        private readonly double _momentum;
+        private readonly double _startL = 13;
         private readonly double _startS = 11;
 
         public Calculation(double learningRate, double momentum) {
@@ -26,7 +26,7 @@ namespace OptimizationMethods {
             _momentum = momentum;
         }
         private bool IsPointGood(double x, double y) {
-            return ((y + x) >= _minSumLAndS);
+            return ((y + x) >= _minSumLAndS && _minL <= x && x <= _maxL && _minS <= y && y <= _maxS);
         }
         public double Function(Pair pair) {
             double L = pair.X;
