@@ -14,11 +14,22 @@ using System.Windows.Shapes;
 
 namespace OptimizationMethods {
     /// <summary>
-    /// Interaction logic for Info.xaml
+    /// Interaction logic for LoginWindow.xaml
     /// </summary>
-    public partial class Info : Window {
-        public Info() {
+    public partial class LoginWindow : Window {
+        public LoginWindow() {
             InitializeComponent();
+        }
+
+        private void UserButton_MouseDown(object sender, MouseButtonEventArgs e) {
+            //Hide();
+            //new MainWindow().Show();
+            //Close();
+        }
+
+        private void UserButton_Click(object sender, RoutedEventArgs e) {
+            new MainWindow().Show();
+            Close();
         }
     }
 }

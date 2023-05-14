@@ -14,10 +14,10 @@ using System.Windows.Shapes;
 
 namespace OptimizationMethods {
     /// <summary>
-    /// Interaction logic for Login.xaml
+    /// Interaction logic for InfoWindow.xaml
     /// </summary>
-    public partial class Login : Window {
-        public Login() {
+    public partial class InfoWindow : Window {
+        public InfoWindow() {
             InitializeComponent();
         }
     }

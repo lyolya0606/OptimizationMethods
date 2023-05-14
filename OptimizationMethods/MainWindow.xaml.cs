@@ -33,11 +33,17 @@ namespace OptimizationMethods {
         }
 
         private void FillResult() {
+            List<Pair> listOfPairsGr = _calculation.GradientDescent();
+            Pair lastPairGr = new(listOfPairsGr[listOfPairsGr.Count - 1].X, listOfPairsGr[listOfPairsGr.Count - 1].Y);
+            LResult.Content = Math.Round(lastPairGr.X, 4);
+            SResult.Content = Math.Round(lastPairGr.Y, 4);
+            PResult.Content = Math.Round(_calculation.Function(lastPairGr) * 100, 4);
+            
             List<Pair> listOfPairs = _calculation.GradientDescentHeavyBall();
             Pair lastPair = new(listOfPairs[listOfPairs.Count - 1].X, listOfPairs[listOfPairs.Count - 1].Y);
-            LResult.Content = Math.Round(lastPair.X, 4);
-            SResult.Content = Math.Round(lastPair.Y, 4);
-            PResult.Content = Math.Round(_calculation.Function(lastPair) * 100, 4);
+            LResultBall.Content = Math.Round(lastPair.X, 4);
+            SResultBall.Content = Math.Round(lastPair.Y, 4);
+            PResultBall.Content = Math.Round(_calculation.Function(lastPair) * 100, 4);
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e) {
@@ -53,9 +59,8 @@ namespace OptimizationMethods {
         private bool CheckTextBoxEmpty() {
             return learningRateTextBox.Text != "" && momentumTextBox.Text != "";
         }
-        
 
-        private void CalcButton_MouseDown(object sender, MouseButtonEventArgs e) {
+        private void CalcButton_Click(object sender, RoutedEventArgs e) {
             if (!CheckTextBox()) {
                 MessageBox.Show("Коэффициенты должны быть в диапазоне от 0 до 1!");
             } else if (!CheckTextBoxEmpty()) {
@@ -66,6 +71,20 @@ namespace OptimizationMethods {
                 CreateChart2D(WPFChart2D);
                 CreateChart3D(WPFChart3D);
             }
+        }
+
+
+        private void CalcButton_MouseDown(object sender, MouseButtonEventArgs e) {
+            //if (!CheckTextBox()) {
+            //    MessageBox.Show("Коэффициенты должны быть в диапазоне от 0 до 1!");
+            //} else if (!CheckTextBoxEmpty()) {
+            //    MessageBox.Show("Введите данные");
+            //} else {
+            //    _calculation = new(double.Parse(learningRateTextBox.Text), double.Parse(momentumTextBox.Text));
+            //    FillResult();
+            //    CreateChart2D(WPFChart2D);
+            //    CreateChart3D(WPFChart3D);
+            //}
         }
 
 
@@ -268,10 +287,9 @@ namespace OptimizationMethods {
          }
 
         private void Info_Click(object sender, RoutedEventArgs e) {
-            Info info = new();
+            InfoWindow info = new();
             info.ShowDialog();
         }
-
 
     }
 }

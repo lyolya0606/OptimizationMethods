@@ -1,4 +1,4 @@
-﻿<Window x:Class="OptimizationMethods.Login"
+﻿<Window x:Class="OptimizationMethods.LoginWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -12,7 +12,7 @@
         <Label Content="Пароль:" HorizontalAlignment="Left" Margin="45,140,0,0" VerticalAlignment="Top" FontSize="16"/>
         <PasswordBox HorizontalAlignment="Left" Margin="144,146,0,0" VerticalAlignment="Top" Width="120" FontSize="16"/>
         <Button Name="AdminButton" Content="Администратор" Background="White" Cursor="Hand" HorizontalAlignment="Left" Margin="39,206,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <Button Name="UserButton" Content="Пользователь" Background="White" Cursor="Hand" HorizontalAlignment="Left" Margin="216,206,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <Button Name="UserButton" Content="Пользователь" Background="White" Cursor="Hand" HorizontalAlignment="Left" Margin="216,206,0,0" VerticalAlignment="Top" FontSize="16" MouseDown="UserButton_MouseDown" Click="UserButton_Click"/>
 
     </Grid>
 </Window>
