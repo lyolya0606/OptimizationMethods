@@ -6,16 +6,23 @@
         xmlns:ChartDirector="clr-namespace:ChartDirector;assembly=netchartdir"
         xmlns:local="clr-namespace:OptimizationMethods"
         mc:Ignorable="d"
-        Title="MainWindow" Height="750" Width="1500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Вариант 3" Height="750" Width="1500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" FontFamily="Times New Roman">
     <Grid>
-        <TextBox Name="TestTextBox" HorizontalAlignment="Left" Margin="76,59,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="244" Height="93"/>
-        <ChartDirector:WPFChartViewer x:Name="WPFChart2D" Width="650" Height="650" Margin="199,76,651,8" />
+        <TextBox Name="TestTextBox" HorizontalAlignment="Left" Margin="48,424,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="244" Height="93"/>
+        <ChartDirector:WPFChartViewer x:Name="WPFChart2D" Width="600" Height="600" Margin="224,89,676,45" />
         <ChartDirector:WPFChartViewer x:Name="WPFChart3D" Width="600" Height="600" MouseMoveChart="WPFChart3D_MouseMoveChart" 
-                                      MouseUp="WPFChart3D_MouseUpChart" ViewPortChanged="WPFChart3D_ViewPortChanged"  Margin="882,77,18,57" />
-        <Label Content="лишь бы перекрыть" HorizontalAlignment="Left" Margin="194,663,0,0" VerticalAlignment="Top" Width="654" Background="White" Foreground="#FFFDFDFD"/>
-        <Label Content="лишь бы перекрыть" HorizontalAlignment="Left" Margin="839,668,0,0" VerticalAlignment="Top" Width="654" Background="White" Foreground="#FFFDFDFD"/>
+                                      MouseUp="WPFChart3D_MouseUpChart" ViewPortChanged="WPFChart3D_ViewPortChanged"  Margin="874,91,26,43" />
+        <Label Content="лишь бы перекрыть" HorizontalAlignment="Left" Margin="194,653,0,0" VerticalAlignment="Top" Width="654" Background="White" Foreground="#FFFDFDFD"/>
+        <Label Content="лишь бы перекрыть" HorizontalAlignment="Left" Margin="833,652,0,0" VerticalAlignment="Top" Width="654" Background="White" Foreground="#FFFDFDFD"/>
         <Menu Height="35" VerticalAlignment="Top">
             <MenuItem Header="Информация" Cursor="Hand" FontSize="16" Height="33" Width="121" RenderTransformOrigin="1.069,0.588" Click="Info_Click"/>
         </Menu>
+        <Image HorizontalAlignment="Left" Height="100" Margin="584,40,0,0" VerticalAlignment="Top" Width="100"/>
+        <Image Margin="584,40,437,646" Source="/Image1.png" Stretch="Fill"/>
+        <Label Content="Коэффициент пропорциональности:" HorizontalAlignment="Left" Margin="4,62,0,0" VerticalAlignment="Top" Width="225" FontFamily="Times New Roman" FontSize="14"/>
+        <TextBox Name="learningRateTextBox" HorizontalAlignment="Left" PreviewTextInput="NumberValidationTextBox" Margin="7,89,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" FontSize="14"/>
+        <Label Content="Момент:" HorizontalAlignment="Left" Margin="4,120,0,0" VerticalAlignment="Top" Width="225" FontFamily="Times New Roman" FontSize="14"/>
+        <TextBox Name="momentumTextBox" HorizontalAlignment="Left" PreviewTextInput="NumberValidationTextBox" Margin="7,147,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" FontSize="14"/>
+        <Label Content="Коэффициенты могут быть в диапазоне от 0 до 1" HorizontalAlignment="Left" Margin="4,38,0,0" VerticalAlignment="Top" Width="307" FontFamily="Times New Roman" FontSize="14" Background="#FFFFD3D3"/>
     </Grid>
 </Window>

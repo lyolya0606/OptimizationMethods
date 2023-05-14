@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,7 +23,7 @@ namespace OptimizationMethods {
         public MainWindow() {
             InitializeComponent();
 
-            Calculation calculation = new();
+            Calculation calculation = new(0.1, 0.1);
             // TestTextBox.Text = calculation.Gradient(5, 6)[0].ToString() + " " + calculation.Gradient(5, 6)[1].ToString();
 
             List<Pair> x = calculation.GradientDescent();
@@ -40,7 +41,16 @@ namespace OptimizationMethods {
 
         }
 
-        private Calculation _calculation = new();
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e) {
+            var regex = new Regex("[^0-9.]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private bool CheckTextBox() {
+            return int.Parse(learningRateTextBox.Text) >= 0 && int.Parse(learningRateTextBox.Text) <= 1 &&
+                   int.Parse(momentumTextBox.Text) <= 1 && int.Parse(momentumTextBox.Text) >= 0;
+        }
+        private Calculation _calculation = new(0.1, 0.1);
 
 
         //Name of demo module

@@ -21,7 +21,10 @@ namespace OptimizationMethods {
         private readonly double _startL = 9;
         private readonly double _startS = 11;
 
-
+        public Calculation(double learningRate, double momentum) {
+            _learningRate = learningRate;
+            _momentum = momentum;
+        }
         private bool IsPointGood(double x, double y) {
             return ((y + x) >= _minSumLAndS);
         }
