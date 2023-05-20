@@ -40,13 +40,15 @@ namespace OptimizationMethods {
             Pair lastPairGr = new(listOfPairsGr[listOfPairsGr.Count - 1].X, listOfPairsGr[listOfPairsGr.Count - 1].Y);
             LResult.Content = Math.Round(lastPairGr.X, 4);
             SResult.Content = Math.Round(lastPairGr.Y, 4);
-            PResult.Content = Math.Round(_calculation.Function(lastPairGr) * 100, 4);
+            PResult.Content = Math.Round(_calculation.Function(lastPairGr), 4);
+            Expenses.Content = Math.Round(_calculation.Function(lastPairGr) * 100, 4);
             
             List<Pair> listOfPairs = _calculation.GradientDescentHeavyBall();
             Pair lastPair = new(listOfPairs[listOfPairs.Count - 1].X, listOfPairs[listOfPairs.Count - 1].Y);
             LResultBall.Content = Math.Round(lastPair.X, 4);
             SResultBall.Content = Math.Round(lastPair.Y, 4);
-            PResultBall.Content = Math.Round(_calculation.Function(lastPair) * 100, 4);
+            PResultBall.Content = Math.Round(_calculation.Function(lastPair), 4);
+            ExpensesBall.Content = Math.Round(_calculation.Function(lastPair) * 100, 4);
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e) {
@@ -312,5 +314,9 @@ namespace OptimizationMethods {
             Close();
         }
 
+        private void Methods_Click(object sender, RoutedEventArgs e) {
+            MethodsWindow methodsWindow = new();
+            methodsWindow.ShowDialog();
+        }
     }
 }

@@ -15,7 +15,7 @@
         <Label Content="лишь бы перекрыть" HorizontalAlignment="Left" Margin="833,688,0,0" VerticalAlignment="Top" Width="654" Background="White" Foreground="#FFFDFDFD"/>
         <Menu Height="35" VerticalAlignment="Top">
             <MenuItem Header="Задача" Cursor="Hand" FontSize="16" Height="33" Width="60" RenderTransformOrigin="1.069,0.588" Click="Info_Click"/>
-            <MenuItem Header="Методы" Cursor="Hand" FontSize="16" Height="33" Width="70" RenderTransformOrigin="1.069,0.588" Click="Info_Click"/>
+            <MenuItem Header="Методы" Cursor="Hand" FontSize="16" Height="33" Width="70" RenderTransformOrigin="1.069,0.588" Click="Methods_Click"/>
             <MenuItem Header="Выход" Cursor="Hand" FontSize="16" Height="33" Width="60" RenderTransformOrigin="1.069,0.588" Click="Exit_Click"/>
         </Menu>
         <Image HorizontalAlignment="Left" Height="100" Margin="584,40,0,0" VerticalAlignment="Top" Width="100"/>
@@ -26,7 +26,7 @@
         <TextBox Name="momentumTextBox" HorizontalAlignment="Left" PreviewTextInput="NumberValidationTextBox" Margin="7,135,0,0" TextWrapping="Wrap" Text="0.2" VerticalAlignment="Top" Width="120" FontSize="14"/>
         <Label Content="Коэффициенты должны быть в диапазоне от 0 до 1" HorizontalAlignment="Left" Margin="4,38,0,0" VerticalAlignment="Top" Width="317" FontFamily="Times New Roman" FontSize="14" Background="#FFFFD3D3"/>
         <Button Name="CalcButton" Content="Рассчитать" HorizontalAlignment="Left" Background="White" Cursor="Hand" Margin="126,213,0,0" VerticalAlignment="Top" Height="30" Width="79" MouseDown="CalcButton_MouseDown" Click="CalcButton_Click"/>
-        <Label Content="Результат" HorizontalAlignment="Left" Margin="74,455,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <Label Content="Результат" HorizontalAlignment="Left" Margin="78,455,0,0" VerticalAlignment="Top" FontSize="14"/>
         <Label Content="L:" HorizontalAlignment="Left" Margin="10,527,0,0" VerticalAlignment="Top" FontSize="14"/>
         <Label Name="LResult" Content="" HorizontalAlignment="Left" Margin="38,528,0,0" VerticalAlignment="Top" FontSize="14" Width="68"/>
         <Label Content="S:" HorizontalAlignment="Left" Margin="10,559,0,0" VerticalAlignment="Top" FontSize="14"/>
@@ -60,6 +60,10 @@
         <Label Content="м" HorizontalAlignment="Left" Margin="188,529,0,0" VerticalAlignment="Top" Width="28" FontFamily="Times New Roman" FontSize="14"/>
         <Label Content="м" HorizontalAlignment="Left" Margin="188,560,0,0" VerticalAlignment="Top" Width="28" FontFamily="Times New Roman" FontSize="14"/>
         <Label Content="кг" HorizontalAlignment="Left" Margin="188,590,0,0" VerticalAlignment="Top" Width="28" FontFamily="Times New Roman" FontSize="14"/>
+        <Label Content="Затраты" HorizontalAlignment="Left" Margin="82,618,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <Label Name="Expenses" Content="" HorizontalAlignment="Left" Margin="35,637,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <Label x:Name="ExpensesBall" Content="" HorizontalAlignment="Left" Margin="138,637,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="58" Margin="10,621,0,0" VerticalAlignment="Top" Width="199"/>
 
 
     </Grid>

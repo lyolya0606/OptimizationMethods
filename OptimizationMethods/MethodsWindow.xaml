@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OptimizationMethods"
         mc:Ignorable="d"
-        Title="Методы" Height="650" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Методы" Height="800" Width="1000" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Image Margin="10,15,16,396" Source="/Image5.png" Stretch="Fill"/>
-        <Image Margin="10,257,16,30" Source="/Image6.png" Stretch="Fill"/>
+        <Image Margin="10,-34,16,445" Source="/Image5.png"/>
+        <Image Margin="10,284,16,3" Source="/Image6.png" />
 
     </Grid>
 </Window>
