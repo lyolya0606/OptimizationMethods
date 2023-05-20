@@ -8,11 +8,11 @@
         Title="Вход" Height="350" Width="350" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" FontFamily="Times New Roman">
     <Grid>
         <Label Content="Логин:" HorizontalAlignment="Left" Margin="45,90,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <TextBox Name="loginTextBox" HorizontalAlignment="Left" Margin="144,96,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" FontSize="16"/>
+        <TextBox Name="LoginTextBox" HorizontalAlignment="Left" Margin="144,96,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" FontSize="16"/>
         <Label Content="Пароль:" HorizontalAlignment="Left" Margin="45,140,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <PasswordBox HorizontalAlignment="Left" Margin="144,146,0,0" VerticalAlignment="Top" Width="120" FontSize="16"/>
-        <Button Name="AdminButton" Content="Администратор" Background="White" Cursor="Hand" HorizontalAlignment="Left" Margin="39,206,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <Button Name="UserButton" Content="Пользователь" Background="White" Cursor="Hand" HorizontalAlignment="Left" Margin="216,206,0,0" VerticalAlignment="Top" FontSize="16" MouseDown="UserButton_MouseDown" Click="UserButton_Click"/>
+        <PasswordBox Name="PasswordTextBox" HorizontalAlignment="Left" Margin="144,146,0,0" VerticalAlignment="Top" Width="120" FontSize="16"/>
+        <Button Name="AdminButton" Content="Администратор" Background="White" Cursor="Hand" HorizontalAlignment="Left" Margin="39,206,0,0" VerticalAlignment="Top" FontSize="16" Click="AdminButton_Click"/>
+        <Button Name="UserButton" Content="Пользователь" Background="White" Cursor="Hand" HorizontalAlignment="Left" Margin="216,206,0,0" VerticalAlignment="Top" FontSize="16" Click="UserButton_Click"/>
 
     </Grid>
 </Window>

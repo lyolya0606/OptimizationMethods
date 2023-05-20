@@ -6,8 +6,8 @@ using MoreLinq;
 
 namespace OptimizationMethods {
     public class Calculation {
-        private readonly double _H = 9;
-        private readonly int _N = 10;
+        private readonly double _H;
+        private readonly int _N;
         private readonly double _alpha = 1;
         private readonly double _beta = 1;
         private readonly double _gamma = 1;
@@ -21,9 +21,11 @@ namespace OptimizationMethods {
         private readonly double _startL = 13;
         private readonly double _startS = 11;
 
-        public Calculation(double learningRate, double momentum) {
+        public Calculation(double learningRate, double momentum, double H, int N) {
             _learningRate = learningRate;
             _momentum = momentum;
+            _H = H;
+            _N = N;
         }
         private bool IsPointGood(double x, double y) {
             return ((y + x) >= _minSumLAndS && _minL <= x && x <= _maxL && _minS <= y && y <= _maxS);

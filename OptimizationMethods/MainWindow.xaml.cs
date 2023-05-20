@@ -24,12 +24,15 @@ namespace OptimizationMethods {
 
         public MainWindow() {
             InitializeComponent();
+            FillPage();
+        }
 
-            _calculation = new(double.Parse(learningRateTextBox.Text), double.Parse(momentumTextBox.Text));
+        private void FillPage() {
+            _calculation = new(double.Parse(learningRateTextBox.Text), double.Parse(momentumTextBox.Text), 
+                double.Parse(HTextBox.Text), int.Parse(NTextBox.Text));
             FillResult();
             CreateChart2D(WPFChart2D);
             CreateChart3D(WPFChart3D);
-
         }
 
         private void FillResult() {
@@ -50,10 +53,19 @@ namespace OptimizationMethods {
             var regex = new Regex("[^0-9.]+");
             e.Handled = regex.IsMatch(e.Text);
         }
+        
+        private void NumberValidationNBox(object sender, TextCompositionEventArgs e) {
+            var regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
 
         private bool CheckTextBox() {
             return double.Parse(learningRateTextBox.Text) >= 0 && double.Parse(learningRateTextBox.Text) <= 1 &&
                    double.Parse(momentumTextBox.Text) <= 1 && double.Parse(momentumTextBox.Text) >= 0;
+        }
+
+        private bool CheckNHBox() {
+            return double.Parse(NTextBox.Text) != 0 && double.Parse(HTextBox.Text) != 0;
         }
         
         private bool CheckTextBoxEmpty() {
@@ -63,13 +75,12 @@ namespace OptimizationMethods {
         private void CalcButton_Click(object sender, RoutedEventArgs e) {
             if (!CheckTextBox()) {
                 MessageBox.Show("Коэффициенты должны быть в диапазоне от 0 до 1!");
+            } else if (!CheckNHBox()) {
+                MessageBox.Show("N и H не могут быть равны 0");
             } else if (!CheckTextBoxEmpty()) {
                 MessageBox.Show("Введите данные");
             } else {
-                _calculation = new(double.Parse(learningRateTextBox.Text), double.Parse(momentumTextBox.Text));
-                FillResult();
-                CreateChart2D(WPFChart2D);
-                CreateChart3D(WPFChart3D);
+                FillPage();
             }
         }
 
@@ -137,10 +148,14 @@ namespace OptimizationMethods {
             //c.addTitle("z = x * sin(y) + y * sin(x)      ", "Arial Bold Italic", 15);
             c.setPlotArea(75, 20, 500, 550, -1, -1, -1, c.dashLineColor(unchecked((int)0x80000000),
                 Chart.DotLine), -1);
+            c.addLegend(140, -10, false, "Arial Bold", 9).setBackground(Chart.Transparent);
             // c.xAxis().setTitle("X-Axis Title Place Holder", "Arial Bold Italic", 12);
             // c.yAxis().setTitle("Y-Axis Title Place Holder", "Arial Bold Italic", 12);
-            c.xAxis().setLabelStyle("Arial Bold");
-            c.yAxis().setLabelStyle("Arial Bold");
+            // c.xAxis().setLabelStyle("Arial Bold");
+            // c.yAxis().setLabelStyle("Arial Bold");
+            c.xAxis().setTitle("L", "Arial Bold", 15);
+            c.yAxis().setTitle("S", "Arial Bold", 15);
+           
        
             c.yAxis().setTickDensity(30);
             c.xAxis().setTickDensity(30);
@@ -150,11 +165,11 @@ namespace OptimizationMethods {
 
             dot.setLineWidth(5);
             
-            var lGradient = c.addLineLayer(lineYGradient, c.dashLineColor(0x808080, Chart.DashLine));
+            var lGradient = c.addLineLayer(lineYGradient, c.dashLineColor(0x808080, Chart.DashLine), "Градиентный спуск");
             lGradient.setXData(lineXGradient);
             lGradient.setLineWidth(4);
             
-            var lHeavyBall = c.addLineLayer(lineYHeavyBall, 0x000000);
+            var lHeavyBall = c.addLineLayer(lineYHeavyBall, 0x000000, "Метод тяжелого шарика Поляка");
             lHeavyBall.setXData(lineXHeavyBall);
             lHeavyBall.setLineWidth(5);
             
@@ -210,8 +225,7 @@ namespace OptimizationMethods {
             // Set the center of the plot region at (330, 290), and set width x depth x height to
             // 360 x 360 x 270 pixels
             c.setPlotRegion(330, 290, 380, 380, 300);
-            
-
+            //c.addSurfaceLine(lastX, lastY, 0xff0000);
             // Set the data to use to plot the chart
             c.setData(dataX, dataY, dataZ);
 
@@ -230,8 +244,9 @@ namespace OptimizationMethods {
             c.setColorAxis(650, 270, Chart.Left, 200, Chart.Right);
 
             // Set the x, y and z axis titles using 10 points Arial Bold font
-            c.xAxis().setTitle("X", "Arial Bold", 15);
-            c.yAxis().setTitle("Y", "Arial Bold", 15);
+            c.xAxis().setTitle("L", "Arial Bold", 15);
+            c.yAxis().setTitle("S", "Arial Bold", 15);
+            c.zAxis().setTitle("Стоимость изготовления", "Arial Bold", 15);
 
             // Set axis label font
             c.xAxis().setLabelStyle("Arial Bold", 10);
@@ -289,6 +304,12 @@ namespace OptimizationMethods {
         private void Info_Click(object sender, RoutedEventArgs e) {
             InfoWindow info = new();
             info.ShowDialog();
+        }
+        
+        private void Exit_Click(object sender, RoutedEventArgs e) {
+            Hide();
+            new LoginWindow().Show();
+            Close();
         }
 
     }
