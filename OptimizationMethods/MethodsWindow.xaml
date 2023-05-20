@@ -1,0 +1,14 @@
+﻿<Window x:Class="OptimizationMethods.MethodsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OptimizationMethods"
+        mc:Ignorable="d"
+        Title="Методы" Height="650" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Image Margin="10,15,16,396" Source="/Image5.png" Stretch="Fill"/>
+        <Image Margin="10,257,16,30" Source="/Image6.png" Stretch="Fill"/>
+
+    </Grid>
+</Window>

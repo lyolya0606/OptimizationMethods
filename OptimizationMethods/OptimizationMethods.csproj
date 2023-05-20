@@ -113,8 +113,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MethodsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MethodsWindow.xaml.cs">
+      <DependentUpon>MethodsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pair.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -153,6 +160,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Image4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image6.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
